@@ -21,6 +21,7 @@ const logOutButton = document.getElementById("logOut");
 const restart = document.getElementById("restart");
 const changeParagraph = document.getElementById("changeParagraph");
 const result = document.getElementById("result");
+const clock = timer();
 //initializing the code
 window.addEventListener("load", () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -79,7 +80,7 @@ function updateDisplay() {
 wordBox.addEventListener("keydown", (event) => {
   totalKeypress++;
   if (firstPress) {
-    localStorage.setItem("startTime", new Date().getTime());
+    clock.startTimer();
     firstPress = false;
     changeParagraph.style.display = "none";
   }
@@ -101,7 +102,8 @@ wordBox?.addEventListener("input", () => {
   }
   updateDisplay();
   if (currentIndex === paragraph.length) {
-    endGame();
+    endGame(30 - clock.time);
+    clock.cleanup();
     return;
   }
 });
@@ -129,8 +131,8 @@ function addLeaderBoard() {
 
 // handle the end of the typing game
 
-function endGame() {
-  const { wpm, correctPercent } = calculateMetrics();
+function endGame(timeTaken) {
+  const { wpm, correctPercent } = calculateMetrics(timeTaken);
   let leaders = JSON.parse(localStorage.getItem("leaders")) || {};
   const name = JSON.parse(localStorage.getItem("currentUser"));
   leaders = {
@@ -141,7 +143,7 @@ function endGame() {
   wordBox.disabled = true;
   restart.style.display = "block";
   addLeaderBoard();
-  result.innerHTML = `Your typing speed is ${wpm} WPM and correctness score is ${correctPercent}%`;
+  result.innerHTML = `Your typing speed is ${wpm} WPM and accuracy is ${correctPercent}%`;
 }
 //restart the game
 restart?.addEventListener("click", () => {
@@ -150,7 +152,6 @@ restart?.addEventListener("click", () => {
 });
 
 function restartGame() {
-  const result = document.getElementById("result");
   currentIndex = 0;
   firstPress = true;
   wordBox.value = "";
@@ -159,19 +160,38 @@ function restartGame() {
   changeParagraph.style.display = "block";
   totalKeypress = 0;
   correctKeypress = 0;
+  clock.cleanup();
   setParagraph();
 }
 
 //to calculate the correctness and wpm of the user
-
-function calculateMetrics() {
-  const endTime = new Date().getTime();
-  const startTime = localStorage.getItem("startTime");
-  const timeTaken = (endTime - startTime) / 1000;
-  const words = paragraph.split(" ").length;
+function calculateMetrics(timeTaken) {
+  let words = 0;
+  for (let i = 0; i <= currentIndex; i++) {
+    if (i === paragraph.length) break;
+    if (i === 0 && paragraph[i] === " ") continue;
+    if (
+      i == currentIndex &&
+      i != paragraph.length - 1 &&
+      paragraph[i + 1] === " "
+    ) {
+      //for the word at curent index
+      words++;
+      continue;
+    }
+    if (i == paragraph.length - 1) {
+      words++;
+      continue;
+    }
+    if (paragraph[i] === " ") {
+      words++;
+    }
+  }
   //wpm
   const wpm = Math.round((words / timeTaken) * 60);
   // correctness
+  totalKeypress--;
+  console.log(totalKeypress, correctKeypress, words);
   const correctPercent = Math.round(
     (correctKeypress / totalKeypress) * 100
   ).toFixed(2);
@@ -182,3 +202,35 @@ function calculateMetrics() {
 changeParagraph?.addEventListener("click", () => {
   setParagraph();
 });
+
+//timer of 30s for the game
+
+function timer() {
+  let time = 30;
+  const timerCount = document.getElementById("timer");
+  let timeId;
+  function startTimer() {
+    timeId = setInterval(countdown, 1000);
+  }
+  function countdown() {
+    if (time == -1) {
+      endGame(30); //end the game
+      cleanup();
+    } else {
+      time--;
+      timerCount.textContent = `${time}s`;
+    }
+  }
+  function cleanup() {
+    time = 30;
+    timerCount.textContent = `30s`;
+    clearInterval(timeId);
+  }
+  return {
+    get time() {
+      return time;
+    },
+    startTimer,
+    cleanup,
+  };
+}
