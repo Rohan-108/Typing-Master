@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Login</title>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100">
+    <div class="container mx-auto">
+        <!-- Welcome Heading -->
+        <h1 class="text-4xl font-extrabold text-center text-blue-700 mt-5 tracking-wide">😁 Welcome 😁</h1>
+      
+        <!-- Login Form Section -->
+        <div class="flex items-center justify-center mt-10 flex-col">
+          <form id="logInForm" class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+            <!-- Username Input -->
+            <div class="mb-6">
+              <label for="username" class="block text-sm font-semibold text-gray-700">Username</label>
+              <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-base" 
+                required>
+            </div>
+      
+            <!-- Password Input -->
+            <div class="mb-6">
+              <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-base" 
+                required>
+            </div>
+      
+            <!-- Login Button -->
+            <div>
+              <button 
+                type="submit" 
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-md shadow-md transition-transform transform hover:scale-105" 
+                id="logButton">
+                Login
+              </button>
+            </div>
+          </form>
+      
+          <!-- Register Link -->
+          <div class="mt-4">
+            <p class="text-center text-gray-600">
+              Don't have an account? 
+              <a href="index.html" class="text-indigo-600 font-semibold hover:underline">Register</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    <script src="./index.js"></script>
+</body>
+</html>

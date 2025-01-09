@@ -1,0 +1,39 @@
+
+  /* Modified code */
+  body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .correct {
+    color: rgb(102, 255, 102);
+  }
+
+  .incorrect {
+    color: #c44565;
+  }
+
+  .default {
+    color: whitesmoke;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: whitesmoke;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #8647ec, #17a2b8);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to right, #6610f2, #17a2b8);
+  }
