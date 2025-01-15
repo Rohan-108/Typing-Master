@@ -1,0 +1,15 @@
+.active{
+    color:blueviolet !important;
+}
+
+
+#chart-container {
+position: relative;
+  height: 400px;
+  width: 600px;
+  margin: 0 auto;
+}
+
+canvas{
+    position: block;
+}

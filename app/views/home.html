@@ -1,0 +1,47 @@
+<section
+class="pt-8 pb-20 md:pt-5 md:pb-10 text-white px-10 max-w-screen-xl "
+id="hero"
+>
+<div class="container flex w-100%">
+  <div class="md:flex  justify-between">
+    <div class="md:w-[40%] md:pt-10">
+      <div class="text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg tracking-tight">
+        Lorem ipsum dolor sit amet.
+      </div>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-white to-[#ffe] text-transparent bg-clip-text mt-6">
+        Lorem ipsum dolor sit amet consectetur.
+      </h1>
+      <p class="text-xl text-[#ffe] tracking-tight mt-6 ">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+        Doloribus quia cum, quas tempora et similique expedita repellat
+        dignissimos at labore eveniet!
+      </p>
+      <div class="flex gap-2 items-center mt-[30px]">
+        <button class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+        ng-show="!user">
+          Get Started
+        </button>
+        <button class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+        ng-show="user" ng-click="goToPage('dashboard')">
+         DashBoard
+        </button>
+        <button type="button" class="text-white font-medium rounded-lg text-sm px-4 py-2 text-center border-2 border-solid border-white
+        transition-all ease-in
+        hover:text-medium
+        "
+        ng-show="!user"
+        >
+          Learn More
+        </button>
+      </div>
+    </div>
+    <div class=" flex items-center mt-20 md:mt-0 md:h-[600px]">
+      <img
+        ng-src="public/typing.png"
+        alt="hero-image"
+        class="md:h-full md:w-auto md:max-w-none flex-1 "
+      />
+    </div>
+  </div>
+</div>
+</section>
