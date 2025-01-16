@@ -3,9 +3,11 @@ import myApp from "../app.js";
 import { randomParagraph } from "../utils.js";
 myApp.controller("TypingController", [
   "$scope",
+  "$rootScope",
   "$interval",
   "SharedService",
-  function ($scope, $interval, SharedService) {
+  "DbService",
+  function ($scope, $interval, SharedService, DbService, $rootScope) {
     $scope.paragraph = randomParagraph().split("");
     $scope.typedInput = "";
     $scope.plotData = [];
@@ -74,7 +76,7 @@ myApp.controller("TypingController", [
         }
       }, 1000);
     }
-
+    // Stop test
     function stopTest() {
       if (angular.isDefined(timer)) {
         $interval.cancel(timer);
@@ -83,6 +85,12 @@ myApp.controller("TypingController", [
       SharedService.setPlotData($scope.plotData);
       SharedService.setWPM($scope.wpm);
       SharedService.setAccuracy($scope.accuracy);
+      DbService.addItem("analytics", {
+        email: $rootScope.user,
+        wpm: $scope.wpm,
+        accuracy: $scope.accuracy,
+        timestamp: new Date().getTime(),
+      });
       $scope.goToPage("result");
     }
     // Reset test

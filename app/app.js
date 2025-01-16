@@ -70,7 +70,6 @@ myApp.run([
     $rootScope.goToPage = (page) => {
       $state.go(page);
     };
-
     //handle the state change errors
     $transitions.onError({}, function (transition) {
       const error = transition.error().detail;

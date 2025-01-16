@@ -4,16 +4,20 @@ import { matchPassword } from "../utils.js";
 myApp.controller("logInController", [
   "$scope",
   "$rootScope",
-  function ($scope, $rootScope) {
+  "DbService",
+  function ($scope, $rootScope, DbService) {
     $scope.user = {};
     $scope.isError = false;
     $scope.submiterror = "Something Went wrong";
     $scope.submitForm = async function () {
       try {
         if ($scope.logInForm.$valid) {
-          //localstrorage to check user data
-          const users = JSON.parse(localStorage.getItem("users") || "[]");
-          const u = users.find((user) => user.email === $scope.user.email);
+          //indexDB to check user data
+          const u = await DbService.searchItemByIndex(
+            "users",
+            "email",
+            $scope.user.email
+          );
           if (!u) {
             $scope.isError = true;
             $scope.submiterror = "User don't exists";
@@ -24,7 +28,7 @@ myApp.controller("logInController", [
               $scope.submiterror = "Invalid Password";
             } else {
               $rootScope.user = u;
-              localStorage.setItem("currentUser", JSON.stringify(u));
+              localStorage.setItem("currentUser", JSON.stringify(u.email));
               $scope.user = {};
               $scope.goToPage("home");
             }
