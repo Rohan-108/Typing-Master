@@ -5,10 +5,9 @@ myApp.controller("logInController", [
   "$scope",
   "$rootScope",
   "DbService",
-  function ($scope, $rootScope, DbService) {
+  "toaster",
+  function ($scope, $rootScope, DbService, toaster) {
     $scope.user = {};
-    $scope.isError = false;
-    $scope.submiterror = "Something Went wrong";
     $scope.submitForm = async function () {
       try {
         if ($scope.logInForm.$valid) {
@@ -19,25 +18,26 @@ myApp.controller("logInController", [
             $scope.user.email
           );
           if (!u) {
-            $scope.isError = true;
-            $scope.submiterror = "User don't exists";
+            toaster.pop("error", "User", "User does not exist");
+            return;
           } else {
             const match = await matchPassword($scope.user.password, u.password);
             if (!match) {
-              $scope.isError = true;
-              $scope.submiterror = "Invalid Password";
+              toaster.pop("error", "Password", "Password does not match");
+              return;
             } else {
-              $rootScope.user = u;
+              $rootScope.user = u.email;
               localStorage.setItem("currentUser", JSON.stringify(u.email));
               $scope.goToPage("home");
+              toaster.pop("success", "LogIn", "You have been logged in.");
             }
           }
         } else {
-          submiterror = "Please fill out the form correctly.";
+          toaster.pop("error", "Form", "Please fill out the form correctly.");
+          returnq;
         }
       } catch (e) {
-        $scope.isError = true;
-        $scope.submiterror = "Something Went wrong";
+        toaster.pop("error", "Error", "Something went wrong");
       }
     };
     $scope.cancel = function () {

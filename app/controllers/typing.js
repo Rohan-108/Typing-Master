@@ -7,7 +7,8 @@ myApp.controller("TypingController", [
   "$interval",
   "SharedService",
   "DbService",
-  function ($scope, $rootScope, $interval, SharedService, DbService) {
+  "toaster",
+  function ($scope, $rootScope, $interval, SharedService, DbService, toaster) {
     $scope.paragraph = randomParagraph().split("");
     $scope.typedInput = "";
     $scope.plotData = [];
@@ -92,7 +93,7 @@ myApp.controller("TypingController", [
         accuracy: $scope.accuracy,
         timestamp: new Date().getTime(),
       });
-      $scope.toast("success", "Test Completed", "Your test has been completed");
+      toaster.pop("success", "Test Completed", "Your test has been completed");
       $scope.goToPage("result");
     }
     // Reset test

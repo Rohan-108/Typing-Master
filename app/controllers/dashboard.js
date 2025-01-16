@@ -10,10 +10,17 @@ myApp.controller("DashboardController", [
     $scope.highestWpm = 0; // To store highest WPM
     $scope.days = 7; // Number of days to show data for
     // Function to initialize the chart
+    $scope.chartInstance = null;
+
+    $scope.upadateChart = function () {
+      $scope.loadChartData();
+    };
     $scope.initChart = function () {
       const ctx = document.getElementById("dashChart").getContext("2d");
-
-      new Chart(ctx, {
+      if ($scope.chartInstance) {
+        $scope.chartInstance.destroy();
+      }
+      $scope.chartInstance = new Chart(ctx, {
         type: "line",
         data: {
           labels: labels,
@@ -61,9 +68,9 @@ myApp.controller("DashboardController", [
             },
             title: {
               display: true,
-              text: "Words Per Minute (WPM) Over Time",
+              text: "Your Performance Over Time",
               color: "#ffffff",
-              font: { size: 25 },
+              font: { size: 20 },
             },
           },
         },

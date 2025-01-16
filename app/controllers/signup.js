@@ -5,28 +5,37 @@ myApp.controller("signUpController", [
   "$scope",
   "$rootScope",
   "DbService",
-  function ($scope, $rootScope, DbService) {
+  "toaster",
+  function ($scope, $rootScope, DbService, toaster) {
     $scope.user = {};
-    $scope.isError = false;
-    $scope.submiterror = "Something Went wrong";
     $scope.submitForm = async function () {
-      if ($scope.signUpForm.$valid) {
-        //localstrorage to store user data
-        const u = await DbService.getItem("users", $scope.user.email);
-        if (u) {
-          $scope.isError = true;
-          $scope.submiterror = "User already exists";
+      try {
+        if ($scope.signUpForm.$valid) {
+          //localstrorage to store user data
+          $scope.user.email = $scope.user.email?.trim();
+          $scope.user.password = $scope.user.password?.trim();
+          const u = await DbService.searchItemByIndex(
+            "users",
+            "email",
+            $scope.user.email
+          );
+          if (u) {
+            toaster.pop("error", "User", "User already exists");
+          } else {
+            const password = await hashPassword($scope.user.password);
+            await DbService.addItem("users", {
+              email: $scope.user.email,
+              password: password,
+            });
+            $rootScope.user = $scope.user.email;
+            $scope.goToPage("home");
+            toaster.pop("success", "SignUp", "You have been signed up.");
+          }
         } else {
-          const password = await hashPassword($scope.user.password);
-          await DbService.addItem("users", {
-            email: $scope.user.email,
-            password: password,
-          });
-          $rootScope.user = $scope.user.email;
-          $scope.goToPage("home");
+          toaster.pop("error", "Form", "Please fill out the form correctly.");
         }
-      } else {
-        submiterror = "Please fill out the form correctly.";
+      } catch (e) {
+        toaster.pop("error", "Error", "Something went wrong");
       }
     };
     $scope.cancel = function () {

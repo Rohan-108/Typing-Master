@@ -4,7 +4,7 @@
 
 
 #chart-container {
-position: relative;
+  position: relative;
   height: 400px;
   width: 600px;
   margin: 0 auto;
@@ -12,4 +12,15 @@ position: relative;
 
 canvas{
     position: block;
+}
+
+/* The starting CSS styles for the enter animation */
+.fade.ng-enter {
+  transition:1s linear all;
+  opacity:0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.fade.ng-enter.ng-enter-active {
+  opacity:1;
 }
