@@ -23,7 +23,6 @@ myApp.controller("signUpController", [
             password: password,
           });
           $rootScope.user = $scope.user.email;
-          $scope.user = {};
           $scope.goToPage("home");
         }
       } else {

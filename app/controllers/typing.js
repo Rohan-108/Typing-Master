@@ -7,7 +7,7 @@ myApp.controller("TypingController", [
   "$interval",
   "SharedService",
   "DbService",
-  function ($scope, $interval, SharedService, DbService, $rootScope) {
+  function ($scope, $rootScope, $interval, SharedService, DbService) {
     $scope.paragraph = randomParagraph().split("");
     $scope.typedInput = "";
     $scope.plotData = [];
@@ -85,12 +85,14 @@ myApp.controller("TypingController", [
       SharedService.setPlotData($scope.plotData);
       SharedService.setWPM($scope.wpm);
       SharedService.setAccuracy($scope.accuracy);
+      // Save analytics data
       DbService.addItem("analytics", {
         email: $rootScope.user,
         wpm: $scope.wpm,
         accuracy: $scope.accuracy,
         timestamp: new Date().getTime(),
       });
+      $scope.toast("success", "Test Completed", "Your test has been completed");
       $scope.goToPage("result");
     }
     // Reset test

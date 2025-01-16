@@ -1,41 +1,22 @@
-<div class="container mx-auto p-6 text-white bg-[#0f1515] min-h-screen">
-    <h1 class="text-4xl font-bold mb-6 text-center text-white tracking-wide">Typing Test</h1>
-  
-    <!-- Typing Area -->
-    <div class="bg-transparent p-6 rounded-xl  w-full max-w-4xl mx-auto mb-8">
-      <p class="text-xl leading-relaxed font-mono">
-        <span 
-          ng-repeat="char in paragraph track by $index"
-          ng-class="{
-            'text-green-500': $index < typedChars.length && typedChars[$index] === char,
-            'text-red-500': $index < typedChars.length && typedChars[$index] !== char,
-            'text-gray-400': $index >= typedChars.length
-          }">{{ char }}</span>
-      </p>
+<div class="container mx-auto p-6 min-h-screen max-w-screen-xl mx-auto bg-[#0f1515] shadow-md rounded-lg p-6 text-white">
+    <h1 class="text-2xl font-bold mb-4">User Dashboard</h1>
+
+    <!-- User Info -->
+    <div class="p-4 rounded mb-6">
+      <h2 class="text-xl font-semibold mb-2">User Details</h2>
+      <p><span class="font-semibold">Email:</span> <span id="userEmail">{{user}}</span></p>
     </div>
-    <div class="w-100 flex justify-center items-center mb-5">
-      <button class="w-[30px]" ng-click="reset()">
-        <img ng-src="public/restart.svg" alt="restart" />
-      </button>  
+
+    <!-- Highest WPM -->
+    <div class=" p-4 rounded mb-6">
+      <h2 class="text-xl font-semibold mb-2">Highest WPM</h2>
+      <p id="highestWPM" class="text-lg font-bold">{{highestWpm}} wpm</p>
     </div>
-    <!-- Input and Stats -->
-    <div class="w-full max-w-4xl mx-auto">
-      <textarea
-        type="text"
-        ng-model="typedInput"
-        ng-keyup="onKeyup()"
-        ng-disabled="timer === 0"
-        placeholder="Start typing here..."
-        class="w-full p-4 rounded-xl border border-gray-600 bg-gray-700 text-gray-100 text-xl focus:outline-none focus:ring-4 focus:ring-blue-600 mb-6"
-        style="caret-color: #facc15;" 
-      ></textarea>
-  
-      <!-- Stats Section -->
-      <div class="flex justify-between items-center text-lg text-gray-300">
-        <div class="text-white">Time Left: <span class="font-bold text-white">{{ timer }}</span>s</div>
-        <div class="text-white">WPM: <span class="font-bold text-white">{{ wpm }}</span></div>
-        <div class="text-white">Accuracy: <span class="font-bold text-white">{{ accuracy }}%</span></div>
+
+    <!-- Last 7 Days Chart -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-screen-xl mx-auto mb-8">
+        <div class="w-full h-[300px]">
+          <canvas id="dashChart"></canvas>
+        </div>
       </div>
-    </div>
   </div>
-  

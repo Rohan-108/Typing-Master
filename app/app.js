@@ -37,9 +37,9 @@ myApp.config([
           ],
         },
       })
-      .state("dashboard", {
-        url: "/dashboard",
-        templateUrl: "app/views/dashboard.html",
+      .state("test", {
+        url: "/test",
+        templateUrl: "app/views/test.html",
         controller: "TypingController",
         resolve: {
           redirectIfNotAuthenticated: [
@@ -51,9 +51,22 @@ myApp.config([
         },
       })
       .state("result", {
-        url: "/dashboard/result",
+        url: "/test/result",
         templateUrl: "app/views/result.html",
         controller: "ResultController",
+      })
+      .state("dashboard", {
+        url: "/dashboard",
+        templateUrl: "app/views/dashboard.html",
+        controller: "DashboardController",
+        resolve: {
+          redirectIfNotAuthenticated: [
+            "AuthService",
+            function (AuthService) {
+              return AuthService.redirectIfNotAuthenticated();
+            },
+          ],
+        },
       });
     $urlRouterProvider.otherwise("/");
   },

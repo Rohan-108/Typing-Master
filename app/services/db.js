@@ -5,7 +5,7 @@ myApp.factory("DbService", [
   function (toaster) {
     const DbService = {};
     const dbName = "typingDB";
-    const version = 1;
+    const version = 2;
 
     //open the database
     DbService.openDatabase = async function () {

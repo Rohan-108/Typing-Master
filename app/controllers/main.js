@@ -38,7 +38,6 @@ myApp.controller("mainController", [
     //for the navbar toggle
     $scope.flag = true;
     $scope.toggle = function () {
-      console.log("toogle");
       $scope.flag = !$scope.flag;
     };
   },

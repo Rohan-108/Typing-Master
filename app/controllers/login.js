@@ -29,7 +29,6 @@ myApp.controller("logInController", [
             } else {
               $rootScope.user = u;
               localStorage.setItem("currentUser", JSON.stringify(u.email));
-              $scope.user = {};
               $scope.goToPage("home");
             }
           }
