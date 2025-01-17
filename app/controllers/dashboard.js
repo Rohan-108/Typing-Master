@@ -8,6 +8,7 @@ myApp.controller("DashboardController", [
     let wpmData = []; // To store chart data
     let labels = []; // To store chart labels
     $scope.highestWpm = 0; // To store highest WPM
+    $scope.averageWpm = 0; // To store average WPM
     $scope.days = 7; // Number of days to show data for
     // Function to initialize the chart
     $scope.chartInstance = null;
@@ -92,12 +93,15 @@ myApp.controller("DashboardController", [
                 hour12: true,
               })
             );
+            let sum = 0;
             wpmData = data.map((item) => {
               if (item.wpm > $scope.highestWpm) {
                 $scope.highestWpm = item.wpm;
+                sum += item.wpm;
               }
               return item.wpm;
             });
+            $scope.averageWpm = (sum / data.length).toFixed(2);
             $scope.$apply(); // Apply changes to scope
 
             $scope.initChart(); // Initialize the chart after data is ready

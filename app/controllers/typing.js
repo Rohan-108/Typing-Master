@@ -16,8 +16,8 @@ myApp.controller("TypingController", [
     $scope.typedChars = [];
     $scope.wpm = 0;
     $scope.accuracy = 0;
-    let correctWords = 0;
     let totalTyped = 0;
+    let errors = 0;
     let timerStarted = false;
     let timer;
     //cleaning already saved data in shared service
@@ -36,8 +36,7 @@ myApp.controller("TypingController", [
 
       // Calculate correct words and accuracy
       let correctChars = 0;
-      correctWords = 0;
-
+      let correctWords = 0;
       for (let i = 0; i < $scope.typedChars.length; i++) {
         if ($scope.typedChars[i] === $scope.paragraph[i]) {
           correctChars++;
@@ -70,6 +69,7 @@ myApp.controller("TypingController", [
             wpm: $scope.wpm,
             time: 30 - $scope.timer,
             accuracy: $scope.accuracy,
+            error: errors,
           });
           $scope.timer--;
         } else {
@@ -103,7 +103,6 @@ myApp.controller("TypingController", [
       $scope.typedChars = [];
       $scope.wpm = 0;
       $scope.accuracy = 0;
-      correctWords = 0;
       totalTyped = 0;
       timerStarted = false;
       if (angular.isDefined(timer)) {

@@ -8,27 +8,34 @@
     </div>
 
     <!-- Highest WPM -->
-    <div class=" p-4 rounded mb-6">
-      <h2 class="text-xl font-semibold mb-2">Highest WPM</h2>
-      <p id="highestWPM" class="text-lg font-bold">{{highestWpm}} wpm</p>
+   
+      <div class="flex items-center justify-start">
+        <label for="daysInput" class="text-gray-200 font-medium mr-2">Show data for:</label>
+        <input 
+          type="number" 
+          id="daysInput" 
+          ng-model="days" 
+          class="w-10 p-1 bg-transparent rounded text-center text-white"
+          ng-change="upadateChart()"
+          min="1" 
+          max="30"
+          ng-model-options="{debounce: 500}"
+          >
+        <span class="text-gray-200 font-medium mr-2">days</span>
+      </div>
+      <div class="flex flex-row justify-between items-center">
+      <div class=" p-4 rounded mb-6">
+        <h2 class="text-xl font-semibold mb-2">Highest WPM</h2>
+        <p id="highestWPM" class="text-lg font-bold">{{highestWpm}} wpm</p>
+      </div>
+      <div class=" p-4 rounded mb-6">
+        <h2 class="text-xl font-semibold mb-2">Average WPM</h2>
+        <p id="highestWPM" class="text-lg font-bold">{{averageWpm}} wpm</p>
+      </div>
     </div>
 
     <!-- Last 7 Days Chart -->
     <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-screen-xl mx-auto mb-8">
-        <div class="flex items-center justify-end">
-            <label for="daysInput" class="text-gray-200 font-medium mr-2">Show data for:</label>
-            <input 
-              type="number" 
-              id="daysInput" 
-              ng-model="days" 
-              class="w-10 p-1 bg-transparent rounded text-center text-white"
-              ng-change="upadateChart()"
-              min="1" 
-              max="30"
-              ng-model-options="{updateOn: 'blur'}"
-              >
-            <span class="text-gray-200 font-medium mr-2">days</span>
-          </div>
         <div class="w-full h-[300px]">
           <canvas id="dashChart"></canvas>
         </div>
