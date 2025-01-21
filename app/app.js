@@ -54,6 +54,14 @@ myApp.config([
         url: "/test/result",
         templateUrl: "app/views/result.html",
         controller: "ResultController",
+        resolve: {
+          redirectIfNotAuthenticated: [
+            "AuthService",
+            function (AuthService) {
+              return AuthService.redirectIfNotAuthenticated();
+            },
+          ],
+        },
       })
       .state("dashboard", {
         url: "/dashboard",

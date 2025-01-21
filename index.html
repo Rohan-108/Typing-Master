@@ -6,10 +6,12 @@
     <base href="/" />
     <script type="module" src="node_modules/angular/angular.js"></script>
     <script type="module" src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,container-queries"></script>
     <script type="module" src="node_modules/angularjs-toaster/toaster.min.js"></script>
     <script type="module" src="node_modules/angular-animate/angular-animate.min.js"></script>
     <link rel="stylesheet" href="node_modules/angularjs-toaster/toaster.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <script src="
     https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js
     "></script>
@@ -17,7 +19,7 @@
     <title>Angular Setup</title>
 </head>
 <!-- bg-gradient-to-r from-indigo-400 to-cyan-400 -->
-<body ng-app="myApp" class="bg-[#0f1515]" ng-controller="mainController">
+<body ng-app="myApp" class="bg-[#0f1515] min-h-screen" ng-controller="mainController">
     <div ng-include="'app/views/navbar.html'"></div>
     <div ui-view class="flex flex-col items-center fade">
     </div>

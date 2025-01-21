@@ -19,5 +19,10 @@ myApp.factory("SharedService", function () {
     setAccuracy: function (accuracy) {
       localStorage.setItem("accuracy", accuracy);
     },
+    resetData: function () {
+      localStorage.removeItem("plotData");
+      localStorage.removeItem("wpm");
+      localStorage.removeItem("accuracy");
+    },
   };
 });

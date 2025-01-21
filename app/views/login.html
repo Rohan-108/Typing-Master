@@ -1,53 +1,71 @@
 <div class="w-full max-w-lg bg-[#101a1b] p-8 rounded-lg shadow-lg my-10">
-    <form 
-      id="logInForm" 
-      name="logInForm" 
-      novalidate 
-    >
-      <h2 class="text-2xl font-bold text-center text-white mb-6">Login</h2>
-  
-      <!-- Username Input -->
-      <div class="mb-6">
-        <label for="username" class="block text-medium font-semibold text-white">Email</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-base" 
-          ng-model="user.email" 
-          ng-required="true"
-          valid-email
-          ng-model-options="{updateOn: 'blur'}"
-        >
-        <p class="text-red-500 text-sm mt-1" ng-if="logInForm.email.$touched && logInForm.email.$error.required">
-          email is required.
-        </p>
-        <p
+  <form id="logInForm" name="logInForm" novalidate>
+    <h2 class="text-2xl font-bold text-center text-white mb-6">Login</h2>
+
+    <!-- Username Input -->
+    <div class="mb-6">
+      <label for="username" class="block text-medium font-semibold text-white"
+        >Email</label
+      >
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-base"
+        ng-model="user.email"
+        ng-required="true"
+        valid-email
+        ng-model-options="{updateOn: 'blur'}"
+      />
+      <p
+        class="text-red-500 text-sm mt-1"
+        ng-if="logInForm.email.$touched && logInForm.email.$error.required"
+      >
+        email is required.
+      </p>
+      <p
         class="text-red-500 text-sm mt-1"
         ng-show="logInForm.email.$dirty && logInForm.email.$error.email"
       >
         Invalid email format.
       </p>
-      </div>
-  
-      <!-- Password Input -->
-      <div class="mb-6">
-        <label for="password" class="block text-medium font-semibold text-white">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-base" 
-          ng-model="user.password" 
-          ng-required="true"
-        >
-        <p class="text-red-500 text-xs mt-1" ng-if="logInForm.password.$touched && logInForm.password.$error.required">
-          Password is required.
-        </p>
-      </div>
-      <!-- Buttons -->
-      <div class="mb-6 flex flex-col gap-2">
-        <button
+    </div>
+
+    <!-- Password Input -->
+    <div class="mb-6 relative">
+      <label for="password" class="block text-medium font-semibold text-white"
+        >Password</label
+      >
+      <input
+        type="{{showPassword ? 'text' : 'password'}}"
+        id="password"
+        name="password"
+        class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-base"
+        ng-model="user.password"
+        ng-required="true"
+      />
+      <!-- Icon to toggle password visibility -->
+      <button
+        type="button"
+        class="absolute right-3 top-[50%] text-gray-500 hover:text-gray-700 focus:outline-none"
+        ng-click="showPassword = !showPassword"
+      >
+        <i
+          class="fa"
+          ng-class="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"
+        ></i>
+      </button>
+      <p
+        class="text-red-500 text-xs mt-1"
+        ng-if="logInForm.password.$touched && logInForm.password.$error.required"
+      >
+        Password is required.
+      </p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mb-6 flex flex-col gap-2">
+      <button
         type="button"
         class="w-full text-white font-bold py-3 px-4 rounded-md shadow-md transition-transform transform"
         ng-class="{
@@ -66,17 +84,16 @@
       >
         cancel
       </button>
-      </div>
-    </form>
-  
-    <!-- Register Link -->
-    <div class="mt-6 text-center">
-      <p class="text-white">
-        Don't have a account?
-        <a ui-sref="signup" class="text-indigo-500 font-semibold underline"
-          >Register</a
-        >
-      </p>
     </div>
+  </form>
+
+  <!-- Register Link -->
+  <div class="mt-6 text-center">
+    <p class="text-white">
+      Don't have a account?
+      <a ui-sref="signup" class="text-indigo-500 font-semibold underline"
+        >Register</a
+      >
+    </p>
   </div>
-  
+</div>

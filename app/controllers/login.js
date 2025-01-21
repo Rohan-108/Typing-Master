@@ -11,33 +11,48 @@ myApp.controller("logInController", [
     $scope.submitForm = async function () {
       try {
         if ($scope.logInForm.$valid) {
-          //indexDB to check user data
+          // IndexDB to check user data
           const u = await DbService.searchItemByIndex(
             "users",
             "email",
             $scope.user.email
           );
+
           if (!u) {
-            toaster.pop("error", "User", "User does not exist");
+            // Trigger digest cycle explicitly
+            $scope.$applyAsync(() => {
+              toaster.pop("error", "User", "User does not exist");
+            });
             return;
           } else {
             const match = await matchPassword($scope.user.password, u.password);
             if (!match) {
-              toaster.pop("error", "Password", "Password does not match");
+              // Trigger digest cycle explicitly
+              $scope.$applyAsync(() => {
+                toaster.pop("error", "Password", "Password does not match");
+              });
               return;
             } else {
               $rootScope.user = u.email;
               localStorage.setItem("currentUser", JSON.stringify(u.email));
               $scope.goToPage("home");
-              toaster.pop("success", "LogIn", "You have been logged in.");
+              $scope.$applyAsync(() => {
+                toaster.pop("success", "LogIn", "You have been logged in.");
+              });
             }
           }
         } else {
-          toaster.pop("error", "Form", "Please fill out the form correctly.");
-          returnq;
+          // Trigger digest cycle explicitly
+          $scope.$applyAsync(() => {
+            toaster.pop("error", "Form", "Please fill out the form correctly.");
+          });
+          return;
         }
       } catch (e) {
-        toaster.pop("error", "Error", "Something went wrong");
+        // Trigger digest cycle explicitly
+        $scope.$applyAsync(() => {
+          toaster.pop("error", "Error", "Something went wrong");
+        });
       }
     };
     $scope.cancel = function () {

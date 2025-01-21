@@ -20,7 +20,9 @@ myApp.controller("signUpController", [
             $scope.user.email
           );
           if (u) {
-            toaster.pop("error", "User", "User already exists");
+            $scope.$applyAsync(() => {
+              toaster.pop("error", "User", "User already exists");
+            });
           } else {
             const password = await hashPassword($scope.user.password);
             await DbService.addItem("users", {
@@ -32,10 +34,14 @@ myApp.controller("signUpController", [
             toaster.pop("success", "SignUp", "You have been signed up.");
           }
         } else {
-          toaster.pop("error", "Form", "Please fill out the form correctly.");
+          $scope.$applyAsync(() => {
+            toaster.pop("error", "User", "Fill out the form correctly");
+          });
         }
       } catch (e) {
-        toaster.pop("error", "Error", "Something went wrong");
+        $scope.$applyAsync(() => {
+          toaster.pop("error", "Error", "Something went wrong");
+        });
       }
     };
     $scope.cancel = function () {

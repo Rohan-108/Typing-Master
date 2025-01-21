@@ -5,16 +5,17 @@ myApp.controller("DashboardController", [
   "$rootScope",
   "DbService",
   function ($scope, $rootScope, DbService) {
-    let wpmData = []; // To store chart data
-    let labels = []; // To store chart labels
+    $scope.wpmData = []; // To store chart data
+    $scope.labels = []; // To store chart labels
     $scope.highestWpm = 0; // To store highest WPM
     $scope.averageWpm = 0; // To store average WPM
     $scope.days = 7; // Number of days to show data for
     // Function to initialize the chart
     $scope.chartInstance = null;
 
-    $scope.upadateChart = function () {
-      $scope.loadChartData();
+    $scope.updateChart = async function () {
+      $scope.$applyAsync();
+      await $scope.loadChartData();
     };
     $scope.initChart = function () {
       const ctx = document.getElementById("dashChart").getContext("2d");
@@ -24,11 +25,11 @@ myApp.controller("DashboardController", [
       $scope.chartInstance = new Chart(ctx, {
         type: "line",
         data: {
-          labels: labels,
+          labels: $scope.labels,
           datasets: [
             {
               label: "WPM",
-              data: wpmData,
+              data: $scope.wpmData,
               backgroundColor: "rgba(75, 192, 192, 0.2)",
               borderColor: "rgba(75, 192, 192, 1)",
               borderWidth: 2,
@@ -79,35 +80,42 @@ myApp.controller("DashboardController", [
     };
 
     // Fetch data asynchronously
-    $scope.loadChartData = function () {
-      DbService.getAnalytics("analytics", $rootScope.user, $scope.days).then(
-        (data) => {
-          if (data.length > 0) {
-            labels = data.map((item) =>
-              new Date(item.timestamp).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })
-            );
-            let sum = 0;
-            wpmData = data.map((item) => {
-              if (item.wpm > $scope.highestWpm) {
-                $scope.highestWpm = item.wpm;
-                sum += item.wpm;
-              }
-              return item.wpm;
-            });
-            $scope.averageWpm = (sum / data.length).toFixed(2);
-            $scope.$apply(); // Apply changes to scope
+    $scope.loadChartData = async function () {
+      try {
+        const data = await DbService.getAnalytics(
+          "analytics",
+          $rootScope.user,
+          $scope.days
+        );
+        if (data.length > 0) {
+          $scope.labels = data.map((item) =>
+            new Date(item.timestamp).toLocaleDateString("en-US", {
+              year: "2-digit",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            })
+          );
+          let sum = 0;
+          $scope.highestWpm = 0;
+          $scope.wpmData = data.map((item) => {
+            if (item.wpm > $scope.highestWpm) {
+              $scope.highestWpm = item.wpm;
+            }
+            sum += item.wpm;
+            return item.wpm;
+          });
+          $scope.averageWpm = (sum / data.length).toFixed(2);
+          $scope.$applyAsync(); // Apply changes to scope
+          console.log($scope.highestWpm, $scope.averageWpm);
 
-            $scope.initChart(); // Initialize the chart after data is ready
-          }
+          $scope.initChart(); // Initialize the chart after data is ready
         }
-      );
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     // Call the function to load data and render the chart

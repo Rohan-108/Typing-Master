@@ -1,5 +1,5 @@
 <!-- Sign-Up Form Section -->
-<div class="w-full max-w-lg  bg-[#101a1b]  p-8 rounded-lg shadow-lg my-10">
+<div class="w-full max-w-lg bg-[#101a1b] p-8 rounded-lg shadow-lg my-10">
   <form id="signUpForm" name="signUpForm" novalidate>
     <h2 class="text-2xl font-bold text-white mb-6 text-center">
       Create Your Account
@@ -34,14 +34,12 @@
     </div>
 
     <!-- Password Input -->
-    <div class="mb-6">
-      <label
-        for="password"
-        class="block text-medium font-semibold text-white"
+    <div class="mb-6 relative">
+      <label for="password" class="block text-medium font-semibold text-white"
         >Password</label
       >
       <input
-        type="password"
+        type="{{showPassword ? 'text' : 'password'}}"
         id="password"
         name="password"
         ng-model="user.password"
@@ -50,6 +48,17 @@
         ng-model-options="{debounce: 500}"
         strong-Password
       />
+      <!-- Icon to toggle password visibility -->
+      <button
+        type="button"
+        class="absolute right-3 top-[50%] text-gray-500 hover:text-gray-700 focus:outline-none"
+        ng-click="showPassword = !showPassword"
+      >
+        <i
+          class="fa"
+          ng-class="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"
+        ></i>
+      </button>
       <p
         class="text-red-500 text-sm mt-1"
         ng-show="signUpForm.password.$dirty && signUpForm.password.$error.required"

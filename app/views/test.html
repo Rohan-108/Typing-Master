@@ -1,41 +1,50 @@
 <div class="container mx-auto p-6 text-white bg-[#0f1515] min-h-screen">
-    <h1 class="text-4xl font-bold mb-6 text-center text-white tracking-wide">Typing Test</h1>
-  
-    <!-- Typing Area -->
-    <div class="bg-transparent p-6 rounded-xl  w-full max-w-4xl mx-auto mb-8">
-      <p class="text-xl leading-relaxed font-mono">
-        <span 
-          ng-repeat="char in paragraph track by $index"
-          ng-class="{
+  <h1 class="text-4xl font-bold mb-6 text-center text-white tracking-wide">
+    Typing Test
+  </h1>
+
+  <!-- Typing Area -->
+  <div class="bg-transparent p-6 rounded-xl w-full max-w-4xl mx-auto mb-8">
+    <p class="text-xl leading-relaxed font-mono">
+      <span
+        ng-repeat="char in paragraph track by $index"
+        ng-class="{
             'text-green-500': $index < typedChars.length && typedChars[$index] === char,
             'text-red-500': $index < typedChars.length && typedChars[$index] !== char,
             'text-gray-400': $index >= typedChars.length
-          }">{{ char }}</span>
-      </p>
-    </div>
-    <div class="w-100 flex justify-center items-center mb-5">
-      <button class="w-[30px]" ng-click="reset()">
-        <img ng-src="public/restart.svg" alt="restart" />
-      </button>  
-    </div>
-    <!-- Input and Stats -->
-    <div class="w-full max-w-4xl mx-auto">
-      <textarea
-        type="text"
-        ng-model="typedInput"
-        ng-keyup="onKeyup()"
-        ng-disabled="timer === 0"
-        placeholder="Start typing here..."
-        class="w-full p-4 rounded-xl border border-gray-600 bg-gray-700 text-gray-100 text-xl focus:outline-none focus:ring-4 focus:ring-blue-600 mb-6"
-        style="caret-color: #facc15;" 
-      ></textarea>
-  
-      <!-- Stats Section -->
-      <div class="flex justify-between items-center text-lg text-gray-300">
-        <div class="text-white">Time Left: <span class="font-bold text-white">{{ timer }}</span>s</div>
-        <div class="text-white">WPM: <span class="font-bold text-white">{{ wpm }}</span></div>
-        <div class="text-white">Accuracy: <span class="font-bold text-white">{{ accuracy }}%</span></div>
+          }"
+        >{{ char }}</span
+      >
+    </p>
+  </div>
+  <div class="w-100 flex justify-center items-center mb-5">
+    <button class="w-[30px]" ng-click="reset()">
+      <img ng-src="public/restart.svg" alt="restart" />
+    </button>
+  </div>
+  <!-- Input and Stats -->
+  <div class="w-full max-w-4xl mx-auto">
+    <textarea
+      type="text"
+      ng-model="typedInput"
+      ng-Keyup="onKeyup($event)"
+      ng-disabled="timer === 0"
+      placeholder="Start typing here..."
+      class="w-full p-4 rounded-xl border border-gray-600 bg-gray-700 text-gray-100 text-xl focus:outline-none focus:ring-4 focus:ring-blue-600 mb-6"
+      style="caret-color: #facc15"
+    ></textarea>
+
+    <!-- Stats Section -->
+    <div class="flex justify-between items-center text-lg text-gray-300">
+      <div class="text-white">
+        Time Left: <span class="font-bold text-white">{{ timer }}</span>s
+      </div>
+      <div class="text-white">
+        WPM: <span class="font-bold text-white">{{ wpm }}</span>
+      </div>
+      <div class="text-white">
+        Accuracy: <span class="font-bold text-white">{{ accuracy }}%</span>
       </div>
     </div>
   </div>
-  
+</div>
